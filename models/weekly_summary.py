@@ -6,3 +6,4 @@ class WeeklySummary(BaseModel):
     min_temp: float
     max_temp: float
     summary: str
+    avg_pressure: float

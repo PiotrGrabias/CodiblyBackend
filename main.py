@@ -3,7 +3,7 @@ from fastapi import FastAPI, Path, HTTPException
 from fastapi.responses import JSONResponse
 from models.forecast_response import ForecastResponse
 from models.weekly_summary import WeeklySummary
-from services.fetch_open_meteo import fetch_open_meteo
+from services.fetch_open_meteo import fetch_open_meteo, fetch_pressures
 from services.build_forecasts import build_forecast, build_summary
 
 app = FastAPI()
@@ -24,12 +24,9 @@ async def current(
 
 
 @app.get("/summary/{lat}/{lon}", response_model=WeeklySummary)
-async def summary(
-    lat: float = Path(..., description="Latitude"),
-    lon: float = Path(..., description="Longitude")
-):
+async def summary(lat: float, lon: float):
     try:
-        data = await fetch_open_meteo(lat, lon)
-        return build_summary(data)
+        daily_data, pressure_data = await fetch_open_meteo(lat, lon), await fetch_pressures(lat, lon)
+        return build_summary(daily_data, pressure_data)
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
