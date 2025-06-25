@@ -41,7 +41,7 @@ def build_summary(daily_data: dict, pressure_data: dict) -> WeeklySummary:
     except Exception:
         avg_pressure = None
 
-    summary_text = "z opadami" if sum(1 for p in precipitation if p > 0) >= 4 else "bez opadów"
+    summary_text = "z opadami" if sum(1 for p in precipitation if p > 50) >= 4 else "bez opadów"
 
     return WeeklySummary(
         avg_sunshine_duration=round(sum(sunshine) / len(sunshine), 2),
