@@ -1,13 +1,23 @@
 import httpx
 from fastapi import FastAPI, Path, HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from models.forecast_response import ForecastResponse
 from models.weekly_summary import WeeklySummary
 from services.fetch_open_meteo import fetch_open_meteo, fetch_pressures
 from services.build_forecasts import build_forecast, build_summary
 
 app = FastAPI()
-
+origin = [
+    "http://localhost:5173"
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origin,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/forecast/{lat}/{lon}", response_model=ForecastResponse)
 async def current(
