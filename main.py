@@ -9,7 +9,7 @@ from services.build_forecasts import build_forecast, build_summary
 
 app = FastAPI()
 origin = [
-    "https://codiblyfrontend.onrender.com/"
+    "https://codiblyfrontend.onrender.com"
 ]
 app.add_middleware(
     CORSMiddleware,
