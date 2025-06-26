@@ -2,7 +2,6 @@ from collections import defaultdict
 from statistics import mean
 from models.weather_forecast import WeatherForecast
 from models.weekly_summary import WeeklySummary
-from services.fetch_open_meteo import fetch_open_meteo
 from utils import calculate_energy
 
 
